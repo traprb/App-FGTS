@@ -64,6 +64,16 @@ body {
     animation: fadeInScale 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Animação de entrada suave */
 }
 
+/* NOVO ESTILO: Logotipo na Splash Screen */
+.splash-image-logo {
+    width: 120px; /* Tamanho do seu logo */
+    height: auto;
+    margin-bottom: 20px;
+    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.3)); /* Sombra para o logo */
+    animation: fadeIn 0.8s ease-out 0.2s forwards; /* Animação de fade-in para o logo */
+}
+
+
 .splash-logo {
     font-size: 3.2rem; /* Tamanho da fonte maior para o logo */
     color: var(--surface-color); /* Cor branca */
@@ -166,6 +176,14 @@ body {
     box-sizing: border-box;
     margin-top: auto; /* Usado para centralização vertical com 'margin-bottom: auto' */
     margin-bottom: auto;
+}
+
+/* NOVO ESTILO: Logotipo na Welcome Screen */
+.welcome-image-logo {
+    width: 100px; /* Tamanho do seu logo */
+    height: auto;
+    margin: 0 auto 20px auto; /* Centraliza e adiciona margem inferior */
+    display: block; /* Garante que ocupe sua própria linha */
 }
 
 .logo-text { /* Estilo do título "Saque Aqui" na welcome screen */
