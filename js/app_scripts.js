@@ -82,7 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.addEventListener('click', () => {
             applyClickEffect(startButton);
             setTimeout(() => {
-                window.location.href = './screen_auth.html';
+                // Navegação ajustada para GitHub Pages
+                window.location.href = 'screen_auth.html';
             }, 300); // Pequeno atraso para efeito de clique
         });
     }
@@ -93,7 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
         authButton.addEventListener('click', () => {
             applyClickEffect(authButton);
             setTimeout(() => {
-                window.location.href = './screen_simulation.html';
+                // Navegação ajustada para GitHub Pages
+                window.location.href = 'screen_simulation.html';
             }, 300); // Pequeno atraso para efeito de clique
         });
     }
@@ -182,7 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             continueButton.addEventListener('click', () => {
                                 applyClickEffect(continueButton);
                                 setTimeout(() => {
-                                    window.location.href = './screen_final_data.html';
+                                    // Navegação ajustada para GitHub Pages
+                                    window.location.href = 'screen_final_data.html';
                                 }, 300);
                             });
                             actionButtonsContainer.appendChild(continueButton);
@@ -279,12 +282,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (phoneInput && (phone.length < 10 || phone.length > 11)) {
                 if (phoneFeedback) {
                     phoneFeedback.textContent = 'Telefone inválido. Formato: (XX) XXXX-XXXX ou (XX) 9XXXX-XXXX';
-                    phoneFeedback.style.display = 'block';
+                } else if (phoneInput && phone.length === 0) { // Verifica se está vazio
+                    if (phoneFeedback) {
+                        phoneFeedback.textContent = 'Por favor, insira seu telefone.';
+                    }
                 }
+                if (phoneFeedback) phoneFeedback.style.display = 'block';
                 isValid = false;
             } else {
                 if (phoneFeedback) phoneFeedback.style.display = 'none';
             }
+
 
             if (isValid) {
                 const formattedCpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
