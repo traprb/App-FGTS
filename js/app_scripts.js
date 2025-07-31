@@ -1,10 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Funções de Máscara ---
+    // --- Seletores de Elementos Globais (para evitar buscas repetitivas) ---
+    const startButton = document.getElementById('startButton');
+    const authButton = document.getElementById('authButton');
+
+    // Elementos da tela de simulação
+    const simulateCpfButton = document.getElementById('simulateCpfButton');
+    const cpfSimulationInput = document.getElementById('cpfSimulation');
+    const cpfSimulationFeedback = document.getElementById('cpfSimulationFeedback');
+    const cpfSimulationGroup = document.getElementById('cpfSimulationGroup'); // Grupo do formulário do CPF
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const progressBar = document.querySelector('.progress');
+    const loadingSteps = document.querySelector('.loading-steps');
+    const simulationOutcomeMessage = document.getElementById('simulationOutcomeMessage');
+    const outcomeTitle = document.getElementById('outcomeTitle');
+    const outcomeText = document.getElementById('outcomeText');
+    // Verificar se simulationOutcomeMessage existe antes de tentar acessar seu querySelector
+    const actionButtonsContainer = simulationOutcomeMessage ? simulationOutcomeMessage.querySelector('.action-buttons-container') : null;
+    const bottomButtonContainer = document.getElementById('bottomButtonContainer'); // Onde fica o botão "Simular com CPF"
+
+    // Elementos da tela de dados finais
+    const finalizeWhatsappButton = document.getElementById('finalizeWhatsappButton');
+    const cpfInput = document.getElementById('cpf');
+    const dobInput = document.getElementById('dob');
+    const phoneInput = document.getElementById('phone');
+    const cpfFeedback = document.getElementById('cpfFeedback');
+    const dobFeedback = document.getElementById('dobFeedback');
+    const phoneFeedback = document.getElementById('phoneFeedback');
+
+
+    // --- Funções de Máscara (Otimizadas para Usabilidade Mobile) ---
     const applyCpfMask = (inputElement) => {
-        if (!inputElement) return; // Garante que o elemento existe
+        if (!inputElement) return;
+
+        inputElement.addEventListener('keydown', (e) => {
+            // Permite Backspace, Delete, Tab, Escape, Enter e as setas
+            if ([8, 46, 9, 27, 13, 37, 38, 39, 40].indexOf(e.keyCode) !== -1) {
+                return; // Deixa o evento padrão ocorrer
+            }
+            // Bloqueia qualquer caractere que não seja um número
+            if (e.key.length === 1 && /\D/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+
         inputElement.addEventListener('input', (e) => {
             let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+            let cursorPosition = e.target.selectionStart;
+            let oldLength = e.target.value.length;
             let formattedValue = '';
 
             if (value.length > 0) {
@@ -20,20 +63,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             e.target.value = formattedValue;
+
+            // Ajusta a posição do cursor para melhor UX
+            let newLength = e.target.value.length;
+            let diff = newLength - oldLength;
+            e.target.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
         });
     };
 
     const applyPhoneMask = (inputElement) => {
-        if (!inputElement) return; // Garante que o elemento existe
+        if (!inputElement) return;
+
+        inputElement.addEventListener('keydown', (e) => {
+            // Permite Backspace, Delete, Tab, Escape, Enter e as setas
+            if ([8, 46, 9, 27, 13, 37, 38, 39, 40].indexOf(e.keyCode) !== -1) {
+                return; // Deixa o evento padrão ocorrer
+            }
+            // Bloqueia qualquer caractere que não seja um número
+            if (e.key.length === 1 && /\D/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+
         inputElement.addEventListener('input', (e) => {
             let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+            let cursorPosition = e.target.selectionStart;
+            let oldLength = e.target.value.length;
             let formattedValue = '';
 
             if (value.length > 0) {
                 formattedValue += '(' + value.substring(0, 2);
                 if (value.length > 2) {
-                    // Se for celular (9 dígitos depois do DDD, começando com 9)
-                    if (value.length > 6 && (value.charAt(2) === '9' || value.charAt(2) === '8' || value.charAt(2) === '7')) { // Adicionado 8 e 7 para flexibilidade
+                    // Se for celular (9 dígitos no Brasil, geralmente começando com 9)
+                    // Consideramos 8 ou 9 dígitos após o DDD para flexibilidade e telefones fixos
+                    if (value.length >= 7 && (value[2] === '9' || value[2] === '8' || value[2] === '7')) { // Aprimorado para ser mais flexível
                         formattedValue += ') ' + value.substring(2, 7);
                         if (value.length > 7) {
                             formattedValue += '-' + value.substring(7, 11);
@@ -47,6 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             e.target.value = formattedValue;
+
+            // Ajusta a posição do cursor para melhor UX
+            let newLength = e.target.value.length;
+            let diff = newLength - oldLength;
+            e.target.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
         });
     };
 
@@ -77,46 +145,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Navegação entre Telas ---
 
     // Botão "Começar Agora" na Welcome Screen
-    const startButton = document.getElementById('startButton');
     if (startButton) {
         startButton.addEventListener('click', () => {
             applyClickEffect(startButton);
             setTimeout(() => {
-                // Navegação ajustada para GitHub Pages
                 window.location.href = 'screen_auth.html';
             }, 300); // Pequeno atraso para efeito de clique
         });
     }
 
     // Botão "Já Autorizei" na Auth Screen
-    const authButton = document.getElementById('authButton');
     if (authButton) {
         authButton.addEventListener('click', () => {
             applyClickEffect(authButton);
             setTimeout(() => {
-                // Navegação ajustada para GitHub Pages
                 window.location.href = 'screen_simulation.html';
             }, 300); // Pequeno atraso para efeito de clique
         });
     }
 
     // --- Lógica da Simulação (Simulation Screen) ---
-    const simulateCpfButton = document.getElementById('simulateCpfButton');
-    const cpfSimulationInput = document.getElementById('cpfSimulation');
-    const cpfSimulationFeedback = document.getElementById('cpfSimulationFeedback');
-    const cpfSimulationGroup = document.getElementById('cpfSimulationGroup'); // Grupo do formulário do CPF
-
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    const progressBar = document.querySelector('.progress');
-    const loadingSteps = document.querySelector('.loading-steps');
-
-    const simulationOutcomeMessage = document.getElementById('simulationOutcomeMessage');
-    const outcomeTitle = document.getElementById('outcomeTitle');
-    const outcomeText = document.getElementById('outcomeText');
-    const actionButtonsContainer = simulationOutcomeMessage ? simulationOutcomeMessage.querySelector('.action-buttons-container') : null;
-    const bottomButtonContainer = document.getElementById('bottomButtonContainer'); // Onde fica o botão "Simular com CPF"
-
-
     if (cpfSimulationInput) {
         applyCpfMask(cpfSimulationInput); // Aplica máscara ao CPF na tela de simulação
     }
@@ -184,7 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             continueButton.addEventListener('click', () => {
                                 applyClickEffect(continueButton);
                                 setTimeout(() => {
-                                    // Navegação ajustada para GitHub Pages
                                     window.location.href = 'screen_final_data.html';
                                 }, 300);
                             });
@@ -203,7 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                 applyClickEffect(whatsappSupportButton);
                                 const phoneNumber = '5511978311920'; // Seu número de WhatsApp
                                 const message = encodeURIComponent(`Olá, meu CPF é ${cpf}. Após a simulação no aplicativo, não foi encontrado valor para mim. Poderiam me ajudar a entender o motivo?`);
-                                window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+                                // Adiciona um pequeno delay para o efeito de clique antes de abrir o WhatsApp
+                                setTimeout(() => {
+                                    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+                                }, 200);
                             };
                             actionButtonsContainer.appendChild(whatsappSupportButton);
 
@@ -233,11 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Lógica da Final Data Screen ---
-    const finalizeWhatsappButton = document.getElementById('finalizeWhatsappButton');
-    const cpfInput = document.getElementById('cpf');
-    const dobInput = document.getElementById('dob');
-    const phoneInput = document.getElementById('phone');
-
     // Aplica as máscaras aos campos (fora da simulação)
     if (cpfInput) applyCpfMask(cpfInput);
     if (phoneInput) applyPhoneMask(phoneInput);
@@ -251,9 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const phone = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
 
             let isValid = true;
-            const cpfFeedback = document.getElementById('cpfFeedback');
-            const dobFeedback = document.getElementById('dobFeedback');
-            const phoneFeedback = document.getElementById('phoneFeedback');
 
             // Validação de CPF
             if (!isValidCPF(cpf)) {
@@ -262,41 +304,43 @@ document.addEventListener('DOMContentLoaded', () => {
                     cpfFeedback.style.display = 'block';
                 }
                 isValid = false;
+                cpfInput.focus(); // Foca no campo para correção
             } else {
                 if (cpfFeedback) cpfFeedback.style.display = 'none';
             }
 
             // Validação de Data de Nascimento (verifica se está preenchida)
             // Uma validação mais robusta de data de nascimento (ex: idade mínima) pode ser adicionada aqui.
-            if (dobInput && !dob) {
+            if (!dobInput || !dob) {
                 if (dobFeedback) {
                     dobFeedback.textContent = 'Informe sua data de nascimento.';
                     dobFeedback.style.display = 'block';
                 }
                 isValid = false;
+                if (dobInput) dobInput.focus();
             } else {
                 if (dobFeedback) dobFeedback.style.display = 'none';
             }
 
             // Validação de Telefone (DDD + 8 ou 9 dígitos)
-            if (phoneInput && (phone.length < 10 || phone.length > 11)) {
+            if (!phoneInput || phone.length < 10 || phone.length > 11) { // Verifica se tem 10 ou 11 dígitos
                 if (phoneFeedback) {
-                    phoneFeedback.textContent = 'Telefone inválido. Formato: (XX) XXXX-XXXX ou (XX) 9XXXX-XXXX';
-                } else if (phoneInput && phone.length === 0) { // Verifica se está vazio
-                    if (phoneFeedback) {
+                    if (!phone) { // Se o campo está vazio
                         phoneFeedback.textContent = 'Por favor, insira seu telefone.';
+                    } else { // Se o campo não está vazio, mas o formato é inválido
+                        phoneFeedback.textContent = 'Telefone inválido. Formato: (XX) XXXX-XXXX ou (XX) 9XXXX-XXXX';
                     }
+                    phoneFeedback.style.display = 'block';
                 }
-                if (phoneFeedback) phoneFeedback.style.display = 'block';
                 isValid = false;
+                if (phoneInput) phoneInput.focus();
             } else {
                 if (phoneFeedback) phoneFeedback.style.display = 'none';
             }
 
-
             if (isValid) {
                 const formattedCpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-                const formattedDob = dob; // Data já está no formato YYYY-MM-DD
+                const formattedDob = dob.split('-').reverse().join('/'); // Converte YYYY-MM-DD para DD/MM/YYYY
                 const formattedPhone = phone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
 
                 const messageContent = `Olá, gostaria de finalizar minha solicitação de Saque FGTS.
@@ -309,7 +353,10 @@ Telefone: ${formattedPhone}`;
                 const message = encodeURIComponent(messageContent);
                 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
-                window.open(whatsappUrl, '_blank'); // Abre o WhatsApp em uma nova aba
+                // Adiciona um pequeno delay para o efeito de clique antes de abrir o WhatsApp
+                setTimeout(() => {
+                    window.open(whatsappUrl, '_blank'); // Abre o WhatsApp em uma nova aba
+                }, 200);
             }
         });
     }
@@ -327,20 +374,34 @@ Telefone: ${formattedPhone}`;
 
     // --- Feedback Visual de Clique para Elementos Interativos ---
     function applyClickEffect(element) {
+        // Adiciona e remove a classe 'active' para feedback visual.
+        // Usa requestAnimationFrame para garantir que a classe seja aplicada antes de ser removida,
+        // garantindo que a animação CSS ocorra.
         element.classList.add('active');
-        // Usar requestAnimationFrame para garantir que a classe seja aplicada antes de ser removida
         requestAnimationFrame(() => {
             setTimeout(() => {
                 element.classList.remove('active');
-            }, 300); // Remove a classe 'active' após 300ms
+            }, 300); // Remove a classe 'active' após 300ms (tempo da transição CSS)
         });
     }
 
     // Adiciona o feedback visual a todos os elementos com a classe 'interactive'
-    // Usa 'mousedown' para efeito instantâneo e não interferir com ':focus' em inputs
+    // Usa 'mouseup' para simular o clique completo e 'touchend' para toque mobile.
     document.querySelectorAll('.interactive').forEach(element => {
-        element.addEventListener('mousedown', () => {
+        element.addEventListener('mouseup', () => {
             applyClickEffect(element);
+        });
+        element.addEventListener('touchend', (event) => {
+            event.preventDefault(); // Previne o comportamento padrão (ex: duplo clique em mobile)
+            applyClickEffect(element);
+        });
+        // Para garantir que o efeito de "active" não persista se o usuário
+        // arrastar o dedo para fora do botão no touch, ou soltar o mouse fora.
+        element.addEventListener('mouseleave', () => {
+            element.classList.remove('active');
+        });
+        element.addEventListener('touchcancel', () => {
+            element.classList.remove('active');
         });
     });
 
