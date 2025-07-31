@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saque Aqui - Autorização Segura</title>
+    <link rel="stylesheet" href="./css/app_styles.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="auth-screen">
+    <div class="header">
+        <button class="back-button interactive" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button>
+        <h2>Autorização FGTS</h2>
+    </div>
+
+    <div class="content-container">
+        <h3>Prepare-se para Liberar seu FGTS!</h3>
+        <p class="description-text">Siga estes passos essenciais no aplicativo oficial do FGTS para que possamos consultar seu saldo e prosseguir com a simulação. É simples e seguro!</p>
+
+        <div class="instruction-block interactive">
+            <div class="icon-circle"><i class="fas fa-mobile-alt"></i></div>
+            <div class="text-content">
+                <h4>1. Acesse o App FGTS Oficial</h4>
+                <p>Abra o aplicativo da Caixa Econômica Federal em seu celular.</p>
+            </div>
+        </div>
+
+        <div class="instruction-block interactive">
+            <div class="icon-circle"><i class="fas fa-share-alt"></i></div>
+            <div class="text-content">
+                <h4>2. Navegue para "Autorizar Compartilhamento de Dados"</h4>
+                <p>Dentro do app, localize e selecione a opção que permite compartilhar seus dados.</p>
+            </div>
+        </div>
+
+        <div class="instruction-block interactive">
+            <div class="icon-circle"><i class="fas fa-hand-holding-usd"></i></div>
+            <div class="text-content">
+                <h4>3. Escolha "Empréstimo Saque-Aniversário"</h4>
+                <p>Esta é a modalidade que nos permite consultar seu saldo para o saque.</p>
+            </div>
+        </div>
+
+        <div class="instruction-block interactive last">
+            <div class="icon-circle"><i class="fas fa-university"></i></div>
+            <div class="text-content">
+                <h4>4. Selecione a Instituição: Digimais ou J17 Financeira</h4>
+                <p>Busque e autorize uma de nossas parceiras para ter acesso ao seu FGTS.</p>
+            </div>
+        </div>
+
+        <div class="attention-box info-box">
+            <i class="fas fa-lightbulb"></i>
+            <p><strong>Importante:</strong> Após concluir a autorização no App FGTS, retorne aqui para prosseguir com a simulação.</p>
+        </div>
+    </div>
+
+    <div class="fixed-bottom-bar">
+        <button id="authButton" class="main-button interactive"><i class="fas fa-check-circle"></i> Já Autorizei no App FGTS</button>
+    </div>
+    <script src="./js/app_scripts.js"></script>
+</body>
+</html>
