@@ -4,22 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saque Aqui - Descubra seu Valor</title>
-    <link rel="stylesheet" href="css/app_styles.css">    
+    <!-- CORREÇÃO: O caminho do arquivo CSS foi ajustado para 'css/styles.css' -->
+    <link rel="stylesheet" href="css/styles.css">    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="simulation-screen">
     <div class="header">
+        <!-- Botão de voltar, com classe 'interactive' para feedback visual e aria-label para acessibilidade -->
         <button class="back-button interactive" aria-label="Voltar para a tela anterior"><i class="fas fa-arrow-left"></i></button>
         <h2>Simulação FGTS</h2>
     </div>
 
+    <!-- Conteúdo principal da página, encapsulado em <main> para semântica -->
     <main class="content-container">
         <h3>Verifique seu potencial de saque!</h3>
         <p class="description-text">Para iniciarmos a simulação, por favor, insira seu CPF. Garantimos a total segurança de seus dados.</p>
 
+        <!-- Grupo do formulário do CPF, com ID para ser ocultado/exibido pelo JS -->
         <div class="form-group" id="cpfSimulationGroup">
             <label for="cpfSimulation"><i class="fas fa-id-card"></i> Seu CPF:</label>
+            <!-- inputmode="numeric" para teclado numérico em mobile, pattern para validação básica de formato -->
             <input 
                 type="tel" 
                 id="cpfSimulation" 
@@ -33,6 +38,7 @@
             <small class="input-feedback" id="cpfSimulationFeedback">CPF inválido. Verifique.</small>
         </div>
         
+        <!-- Indicador de carregamento, oculto por padrão (exibido pelo JS durante a simulação) -->
         <div id="loadingIndicator" class="loading-indicator">
             <div class="spinner"></div>
             <p>Analisando dados e simulando propostas...</p>
@@ -42,18 +48,22 @@
             <p class="loading-steps">Etapa 1 de 3: Validando CPF e elegibilidade...</p>
         </div>
 
+        <!-- Mensagem de resultado da simulação, oculto por padrão (exibido pelo JS após a simulação) -->
         <div id="simulationOutcomeMessage" class="simulation-outcome-message">
             <h3 id="outcomeTitle"></h3>
             <p id="outcomeText"></p>
             <div class="action-buttons-container">
-                </div>
+                <!-- Botões de ação serão inseridos aqui dinamicamente pelo JavaScript -->
+            </div>
         </div>
     </main>
 
+    <!-- Barra inferior fixa com o botão de simulação, com ID para ser ocultado/exibido pelo JS -->
     <div class="fixed-bottom-bar" id="bottomButtonContainer">
         <button id="simulateCpfButton" class="main-button interactive"><i class="fas fa-search-dollar"></i> Simular com CPF</button>
     </div>
 
-    <script src="js/app_scripts.js"></script>
+    <!-- CORREÇÃO: O caminho do arquivo JavaScript foi ajustado para 'js/scripts.js' -->
+    <script src="js/scripts.js"></script>
 </body>
 </html>
