@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.addEventListener('click', () => {
             applyClickEffect(startButton);
             setTimeout(() => {
-                window.location.href = 'screen_auth.html';
+                window.location.href = 'auth.html'; // Caminho ajustado para 'auth.html'
             }, 300); // Pequeno atraso para efeito de clique
         });
     }
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         authButton.addEventListener('click', () => {
             applyClickEffect(authButton);
             setTimeout(() => {
-                window.location.href = 'screen_simulation.html';
+                window.location.href = 'simulation.html'; // Caminho ajustado para 'simulation.html'
             }, 300); // Pequeno atraso para efeito de clique
         });
     }
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             continueButton.addEventListener('click', () => {
                                 applyClickEffect(continueButton);
                                 setTimeout(() => {
-                                    window.location.href = 'screen_final_data.html';
+                                    window.location.href = 'finaldata.html'; // Caminho ajustado para 'finaldata.html'
                                 }, 300);
                             });
                             actionButtonsContainer.appendChild(continueButton);
