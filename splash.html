@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saque Aqui - Carregando...</title>
-    <link rel="stylesheet" href="css/app_styles.css"> 
+    <link rel="stylesheet" href="css/app_styles.css">    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body class="splash-screen">
-    <div class="splash-container">
-        <img src="img/logo.png" alt="Saque Aqui Logo" class="splash-image-logo">
+    <main class="splash-container">
         <h1 class="logo splash-logo">Saque Aqui</h1>
         <div class="splash-spinner"></div>
         <p class="splash-message">Aguarde, carregando informações...</p>
-    </div>
+    </main>
 
     <script>
+        // Redireciona para a tela de boas-vindas após 2.8 segundos (2800ms).
+        // Ajuste 'screen_welcome.html' para o caminho da sua primeira tela de conteúdo.
         setTimeout(() => {
-            window.location.href = 'screen_welcome.html'; // Caminho ajustado para GitHub Pages
+            window.location.href = 'screen_welcome.html'; 
         }, 2800);
     </script>
 </body>
