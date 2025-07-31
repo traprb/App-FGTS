@@ -4,14 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saque Aqui - Carregando...</title>
-    <!-- 
-        SOLUÇÃO DEFINITIVA: 
-        A tag <meta http-equiv="refresh"> redireciona para 'welcome.html'
-        após 2.8 segundos. Este método é extremamente confiável 
-        e não depende do JavaScript para a navegação.
-    -->
-    <meta http-equiv="refresh" content="2.8;url=welcome.html">
-    
+    <!-- Incluindo o CSS -->
     <link rel="stylesheet" href="css/styles.css">    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
@@ -21,5 +14,27 @@
         <div class="splash-spinner"></div>
         <p class="splash-message">Aguarde, carregando informações...</p>
     </main>
+
+    <script>
+        // SOLUÇÃO FINAL E DEFINITIVA
+        // A falha ocorre porque a manipulação direta de window.location.href é bloqueada.
+        // A solução mais robusta é criar um link e acionar seu clique via JavaScript.
+        setTimeout(() => {
+            // Cria um elemento <a> temporário no documento
+            const a = document.createElement('a');
+            
+            // Define o caminho correto para o seu repositório no GitHub Pages
+            a.href = '/App-FGTS/welcome.html';
+            
+            // Adiciona o link ao corpo do documento (temporariamente)
+            document.body.appendChild(a);
+            
+            // Simula o clique no link, o que dispara a navegação nativa do navegador
+            a.click();
+            
+            // Remove o elemento após o clique
+            document.body.removeChild(a);
+        }, 2800);
+    </script>
 </body>
 </html>
