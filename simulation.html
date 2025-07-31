@@ -4,23 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saque Aqui - Descubra seu Valor</title>
-    <link rel="stylesheet" href="css/app_styles.css"> 
+    <link rel="stylesheet" href="css/app_styles.css">    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="simulation-screen">
     <div class="header">
-        <button class="back-button interactive" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button>
+        <button class="back-button interactive" aria-label="Voltar para a tela anterior"><i class="fas fa-arrow-left"></i></button>
         <h2>Simulação FGTS</h2>
     </div>
 
-    <div class="content-container">
+    <main class="content-container">
         <h3>Verifique seu potencial de saque!</h3>
         <p class="description-text">Para iniciarmos a simulação, por favor, insira seu CPF. Garantimos a total segurança de seus dados.</p>
 
         <div class="form-group" id="cpfSimulationGroup">
             <label for="cpfSimulation"><i class="fas fa-id-card"></i> Seu CPF:</label>
-            <input type="tel" id="cpfSimulation" placeholder="___.___.___-__" maxlength="14" class="interactive">
+            <input 
+                type="tel" 
+                id="cpfSimulation" 
+                placeholder="___.___.___-__" 
+                maxlength="14" 
+                class="interactive"
+                inputmode="numeric"
+                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                required
+            >
             <small class="input-feedback" id="cpfSimulationFeedback">CPF inválido. Verifique.</small>
         </div>
         
@@ -39,11 +48,12 @@
             <div class="action-buttons-container">
                 </div>
         </div>
-    </div>
+    </main>
 
     <div class="fixed-bottom-bar" id="bottomButtonContainer">
         <button id="simulateCpfButton" class="main-button interactive"><i class="fas fa-search-dollar"></i> Simular com CPF</button>
     </div>
+
     <script src="js/app_scripts.js"></script>
 </body>
 </html>
