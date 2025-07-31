@@ -4,49 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saque Aqui - Finalizar Solicitação</title>
-    <link rel="stylesheet" href="css/app_styles.css"> 
+    <link rel="stylesheet" href="css/app_styles.css">    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="final-data-screen">
     <div class="header">
-        <button class="back-button interactive" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button>
+        <button class="back-button interactive" aria-label="Voltar para a tela anterior"><i class="fas fa-arrow-left"></i></button>
         <h2>Dados para Contato</h2>
     </div>
 
-    <div class="content-container">
+    <main class="content-container">
         <h3>Um especialista entrará em contato!</h3>
         <p class="description-text">Para que possamos te ajudar a liberar seu FGTS, por favor, preencha seus dados abaixo. É rápido e garantimos total privacidade.</p>
 
-        <div class="form-group">
-            <label for="cpf"><i class="fas fa-id-card"></i> CPF:</label>
-            <input type="tel" id="cpf" placeholder="___.___.___-__" maxlength="14" class="interactive">
-            <small class="input-feedback" id="cpfFeedback">CPF inválido. Verifique.</small>
-        </div>
+        <form id="finalDataForm">
+            <div class="form-group">
+                <label for="cpf"><i class="fas fa-id-card"></i> CPF:</label>
+                <input 
+                    type="tel" 
+                    id="cpf" 
+                    placeholder="___.___.___-__" 
+                    maxlength="14" 
+                    class="interactive" 
+                    inputmode="numeric" 
+                    pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" 
+                    autocomplete="off"
+                    required
+                >
+                <small class="input-feedback" id="cpfFeedback">CPF inválido. Verifique.</small>
+            </div>
 
-        <div class="form-group">
-            <label for="dob"><i class="fas fa-calendar-alt"></i> Data de Nascimento:</label>
-            <input type="date" id="dob" class="interactive">
-            <small class="input-feedback" id="dobFeedback">Informe sua data de nascimento.</small>
-        </div>
+            <div class="form-group">
+                <label for="dob"><i class="fas fa-calendar-alt"></i> Data de Nascimento:</label>
+                <input 
+                    type="date" 
+                    id="dob" 
+                    class="interactive"
+                    autocomplete="bday"
+                    required
+                >
+                <small class="input-feedback" id="dobFeedback">Informe sua data de nascimento.</small>
+            </div>
 
-        <div class="form-group">
-            <label for="phone"><i class="fas fa-phone-alt"></i> Telefone com DDD:</label>
-            <input type="tel" id="phone" placeholder="(DDD) _____-____" maxlength="15" class="interactive">
-            <small class="input-feedback" id="phoneFeedback">Número de telefone inválido. Ex: (11) 91234-5678</small>
-        </div>
+            <div class="form-group">
+                <label for="phone"><i class="fas fa-phone-alt"></i> Telefone com DDD:</label>
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    placeholder="(DDD) _____-____" 
+                    maxlength="15" 
+                    class="interactive" 
+                    inputmode="tel" 
+                    pattern="\(\d{2}\) \d{4,5}-\d{4}" 
+                    autocomplete="tel"
+                    required
+                >
+                <small class="input-feedback" id="phoneFeedback">Número de telefone inválido. Ex: (11) 91234-5678</small>
+            </div>
+        </form>
 
         <div class="security-info wide-info-box">
             <i class="fas fa-lock"></i>
             <p>Seus dados são 100% protegidos e utilizados apenas para seu atendimento. Privacidade é nossa prioridade.</p>
         </div>
-    </div>
+    </main>
 
     <div class="fixed-bottom-bar">
         <button id="finalizeWhatsappButton" class="main-button whatsapp interactive">
             <i class="fab fa-whatsapp"></i> Enviar Dados e Falar com Especialista
         </button>
     </div>
+
     <script src="js/app_scripts.js"></script>
 </body>
 </html>
