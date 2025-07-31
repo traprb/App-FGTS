@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saque Aqui - Autorização Segura</title>
-    <link rel="stylesheet" href="css/app_styles.css">    
+    <!-- CORREÇÃO: O caminho do arquivo CSS foi ajustado para 'css/styles.css' -->
+    <link rel="stylesheet" href="css/styles.css">    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="auth-screen">
     <div class="header">
+        <!-- Botão de voltar, com classe 'interactive' para feedback visual e aria-label para acessibilidade -->
         <button class="back-button interactive" aria-label="Voltar para a tela anterior"><i class="fas fa-arrow-left"></i></button>
         <h2>Autorização FGTS</h2>
     </div>
 
+    <!-- Conteúdo principal da página, encapsulado em <main> para semântica -->
     <main class="content-container">
         <h3>Prepare-se para Liberar seu FGTS!</h3>
         <p class="description-text">Siga estes passos essenciais no aplicativo oficial do FGTS para que possamos consultar seu saldo e prosseguir com a simulação. É simples e seguro!</p>
 
+        <!-- Bloco de instrução 1 -->
         <div class="instruction-block">
             <div class="icon-circle"><i class="fas fa-mobile-alt"></i></div>
             <div class="text-content">
@@ -26,6 +30,7 @@
             </div>
         </div>
 
+        <!-- Bloco de instrução 2 -->
         <div class="instruction-block">
             <div class="icon-circle"><i class="fas fa-share-alt"></i></div>
             <div class="text-content">
@@ -34,6 +39,7 @@
             </div>
         </div>
 
+        <!-- Bloco de instrução 3 -->
         <div class="instruction-block">
             <div class="icon-circle"><i class="fas fa-hand-holding-usd"></i></div>
             <div class="text-content">
@@ -42,6 +48,7 @@
             </div>
         </div>
 
+        <!-- Bloco de instrução 4 (último) -->
         <div class="instruction-block last">
             <div class="icon-circle"><i class="fas fa-university"></i></div>
             <div class="text-content">
@@ -50,16 +57,20 @@
             </div>
         </div>
 
+        <!-- Caixa de atenção/informação -->
         <div class="attention-box info-box">
             <i class="fas fa-lightbulb"></i>
             <p><strong>Importante:</strong> Após concluir a autorização no App FGTS, retorne aqui para prosseguir com a simulação.</p>
         </div>
     </main>
 
+    <!-- Barra inferior fixa com o botão principal -->
     <div class="fixed-bottom-bar">
+        <!-- Botão "Já Autorizei", com ID 'authButton' e classe 'interactive' para o JavaScript -->
         <button id="authButton" class="main-button interactive"><i class="fas fa-check-circle"></i> Já Autorizei no App FGTS</button>
     </div>
 
-    <script src="js/app_scripts.js"></script>
+    <!-- CORREÇÃO: O caminho do arquivo JavaScript foi ajustado para 'js/scripts.js' -->
+    <script src="js/scripts.js"></script>
 </body>
 </html>
