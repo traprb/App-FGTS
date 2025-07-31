@@ -1,20 +1,24 @@
+/* Importação da Fonte Roboto do Google Fonts */
+/* É recomendado importar no HTML (<link>) para evitar FOUC, mas aqui para completude */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
 /* Variáveis de Cores (Tema "Bank-Grade" Avançado) */
 :root {
-    --primary-color: #002f5a;   /* Azul Marinho Profundo (Corporate Blue) */
-    --secondary-color: #004a8b; /* Azul Escuro Vívido (Para botões e destaques) */
-    --accent-color: #007bff;    /* Azul Standard (links, ícones, elementos de foco) */
+    --primary-color: #002f5a;     /* Azul Marinho Profundo (Corporate Blue) */
+    --secondary-color: #004a8b;   /* Azul Escuro Vívido (Para botões e destaques) */
+    --accent-color: #007bff;      /* Azul Standard (links, ícones, elementos de foco) */
     --text-color-primary: #343a40; /* Preto quase puro para texto principal */
     --text-color-secondary: #6c757d; /* Cinza escuro para subtextos */
     --background-color: #f8f9fa; /* Fundo muito claro, quase branco */
-    --surface-color: #ffffff; /* Branco puro para cartões e áreas de conteúdo */
-    --border-color: #e9ecef; /* Cinza muito claro para bordas suaves */
-    --success-color: #28a745; /* Verde para sucesso e ações positivas */
-    --error-color: #dc3545; /* Vermelho para erros e avisos */
-    --info-color: #17a2b8; /* Azul turquesa para informações */
-    --warning-color: #ffc107; /* Amarelo para alertas e atenção */
+    --surface-color: #ffffff;    /* Branco puro para cartões e áreas de conteúdo */
+    --border-color: #e9ecef;     /* Cinza muito claro para bordas suaves */
+    --success-color: #28a745;    /* Verde para sucesso e ações positivas */
+    --error-color: #dc3545;      /* Vermelho para erros e avisos */
+    --info-color: #17a2b8;       /* Azul turquesa para informações */
+    --warning-color: #ffc107;    /* Amarelo para alertas e atenção */
     --shadow-color: rgba(0, 0, 0, 0.08); /* Sombra suave e discreta */
     --font-family: 'Roboto', sans-serif; /* Fonte profissional e legível */
-    --border-radius-lg: 12px; /* Cantos mais arredondados para um visual moderno */
+    --border-radius-lg: 12px;    /* Cantos mais arredondados para um visual moderno */
     --border-radius-md: 8px;
     --border-radius-sm: 5px;
 }
@@ -28,9 +32,20 @@ html, body {
     color: var(--text-color-primary);
     min-height: 100vh;
     box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura */
-    overflow-x: hidden; /* Previne rolagem horizontal indesejada */
+    overflow-x: hidden; /* Previne rolagem horizontal indesejada, crucial para mobile */
     -webkit-font-smoothing: antialiased; /* Suaviza a renderização da fonte no WebKit */
     -moz-osx-font-smoothing: grayscale; /* Suaviza a renderização da fonte no Firefox */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque azul ao tocar em links/elementos */
+}
+
+/* Melhoria para seleção de texto */
+::selection {
+    background: var(--accent-color);
+    color: var(--surface-color);
+}
+::-moz-selection {
+    background: var(--accent-color);
+    color: var(--surface-color);
 }
 
 /* Configurações Flexbox para o Body */
@@ -46,14 +61,20 @@ body {
     justify-content: center; /* Centraliza o conteúdo verticalmente */
     flex-direction: column; /* Garante que os itens internos se empilhem */
     text-align: center; /* Centraliza o texto dentro dessas telas */
+    width: 100vw; /* Ocupa a largura total da viewport */
+    height: 100vh; /* Ocupa a altura total da viewport */
+    /* Garante que estas telas ocupem 100% da viewport e não rolem */
+    position: fixed; /* Fixa na viewport */
+    top: 0;
+    left: 0;
+    z-index: 9999; /* Garante que fiquem acima de tudo */
+    overflow: hidden; /* Previne rolagem nestas telas */
 }
 
 /* --- Splash Screen (Tela de Carregamento Inicial) --- */
 .splash-screen {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); /* Gradiente sutil */
     gap: 25px; /* Espaçamento entre elementos */
-    width: 100vw; /* Ocupa a largura total da viewport */
-    height: 100vh; /* Ocupa a altura total da viewport */
 }
 
 .splash-container {
@@ -62,6 +83,8 @@ body {
     align-items: center;
     justify-content: center;
     animation: fadeInScale 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Animação de entrada suave */
+    /* Garante que o container da splash seja sempre visível e não cortado */
+    max-width: 90%; /* Limita a largura para telas muito grandes */
 }
 
 /* NOVO ESTILO: Logotipo na Splash Screen */
@@ -72,7 +95,6 @@ body {
     filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.3)); /* Sombra para o logo */
     animation: fadeIn 0.8s ease-out 0.2s forwards; /* Animação de fade-in para o logo */
 }
-
 
 .splash-logo {
     font-size: 3.2rem; /* Tamanho da fonte maior para o logo */
@@ -160,8 +182,6 @@ body {
 .welcome-screen {
     background-color: var(--background-color);
     padding: 25px;
-    width: 100vw;
-    height: 100vh;
     overflow-y: auto; /* Permite rolagem se o conteúdo for maior que a tela */
 }
 
@@ -224,6 +244,7 @@ body {
     font-weight: 500;
     transition: transform 0.2s ease, background-color 0.2s ease;
     box-shadow: 0 2px 5px rgba(0,0,0,0.15); /* Sombra nos badges */
+    touch-action: manipulation; /* Otimização para toque */
 }
 .security-badge:hover {
     transform: translateY(-3px); /* Efeito de elevação ao passar o mouse */
@@ -250,6 +271,7 @@ body {
     cursor: pointer;
     border: 1px solid var(--border-color);
     box-shadow: 0 2px 6px rgba(0,0,0,0.05); /* Sombra leve nos itens */
+    touch-action: manipulation; /* Otimização para toque */
 }
 
 .feature-item:hover {
@@ -310,6 +332,7 @@ body {
     cursor: pointer;
     padding: 0 10px;
     transition: transform 0.2s ease, opacity 0.2s ease;
+    touch-action: manipulation; /* Otimização para toque */
 }
 
 .header .back-button:active {
@@ -344,6 +367,10 @@ body {
 }
 
 /* --- Títulos e Parágrafos --- */
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3; /* Melhora a legibilidade dos títulos */
+}
+
 h3 {
     color: var(--primary-color);
     margin-bottom: 18px;
@@ -378,6 +405,7 @@ h3 {
     align-items: center;
     gap: 15px; /* Mais espaçamento entre ícone e texto */
     text-decoration: none; /* Garante que botões como links não tenham sublinhado */
+    touch-action: manipulation; /* Otimização para toque */
 }
 
 .main-button:hover {
@@ -436,6 +464,7 @@ h3 {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease;
     box-shadow: 0 3px 8px rgba(0,0,0,0.08); /* Sombra mais elegante */
     cursor: pointer;
+    touch-action: manipulation; /* Otimização para toque */
 }
 
 .instruction-block.last {
@@ -491,19 +520,19 @@ h3 {
     gap: 15px;
     border: 1px solid rgba(0, 123, 255, 0.2); /* Borda suave */
 }
-.attention-box.info-box i {
+.attention-box i, .info-box i { /* Unificado para ambos */
     font-size: 1.6rem;
     color: var(--info-color);
     flex-shrink: 0; /* Impede que o ícone encolha */
 }
-.attention-box p {
+.attention-box p, .info-box p { /* Unificado para ambos */
     margin: 0;
     color: var(--info-color);
     text-align: left;
     font-weight: 500;
     line-height: 1.6;
 }
-.attention-box strong {
+.attention-box strong, .info-box strong { /* Unificado para ambos */
     font-weight: 700;
 }
 
@@ -533,6 +562,9 @@ h3 {
     transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     box-sizing: border-box;
     background-color: var(--background-color);
+    -webkit-appearance: none; /* Remove estilos padrão de input em iOS */
+    -moz-appearance: none; /* Remove estilos padrão de input em Firefox */
+    appearance: none;
 }
 
 .form-group input:focus {
@@ -717,26 +749,33 @@ h3 {
     right: 0;
     z-index: 99;
     border-top: 1px solid var(--border-color);
+    /* Para assegurar que o footer seja visível e tenha espaço para flutuar sobre o conteúdo */
+    /* Se o conteúdo for menor que a tela, o footer ainda fica no final do conteúdo, não da tela */
+    /* Para fixar no final da tela, independentemente do conteúdo, mude para position: fixed; */
 }
 
 
 /* --- Responsividade (Ajustes para Telas Menores) --- */
+/* Media query para dispositivos com largura máxima de 600px */
 @media (max-width: 600px) {
+    /* Ajustes gerais para containers */
     .welcome-container,
     .content-container {
         width: 100%;
-        max-width: none;
+        max-width: none; /* Remove limite de largura */
         padding: 25px 20px; /* Padding ajustado */
-        margin-top: 75px;
+        margin-top: 75px; /* Espaço para o header */
         border-radius: 0; /* Remove bordas arredondadas em modo full-width */
         box-shadow: none; /* Remove sombra em modo full-width */
     }
 
+    /* Ajusta o body para que o conteúdo preencha a largura total em telas menores */
     body:not(.splash-screen):not(.welcome-screen) {
-        align-items: flex-start;
+        align-items: flex-start; /* Alinha ao início para ocupar 100% da largura */
         justify-content: flex-start;
     }
 
+    /* Ajustes para o cabeçalho */
     .header {
         padding: 15px 18px;
     }
@@ -751,6 +790,7 @@ h3 {
         transform: translateX(0); /* Remove ajuste para centralização */
     }
 
+    /* Ajustes para a tela de boas-vindas */
     .logo-text {
         font-size: 2.2rem;
         margin-bottom: 25px;
@@ -785,12 +825,14 @@ h3 {
         font-size: 0.95rem;
     }
 
+    /* Ajustes para botões */
     .main-button {
         font-size: 1.1rem;
         padding: 15px 25px;
         gap: 12px;
     }
 
+    /* Ajustes para títulos e textos */
     h3 {
         font-size: 1.5rem;
         margin-bottom: 15px;
@@ -800,6 +842,7 @@ h3 {
         margin-bottom: 25px;
     }
 
+    /* Ajustes para blocos de instrução */
     .instruction-block {
         padding: 18px;
         gap: 18px;
@@ -816,15 +859,17 @@ h3 {
         font-size: 0.95rem;
     }
 
+    /* Ajustes para caixas de atenção/informação */
     .attention-box, .info-box {
         padding: 18px;
         font-size: 0.95rem;
         gap: 12px;
     }
-    .attention-box.info-box i {
+    .attention-box i, .info-box i {
         font-size: 1.4rem;
     }
 
+    /* Ajustes para formulários */
     .form-group {
         margin-bottom: 20px;
     }
@@ -837,6 +882,7 @@ h3 {
         font-size: 1rem;
     }
 
+    /* Ajustes para indicador de carregamento */
     .loading-indicator {
         padding: 50px 20px;
         gap: 20px;
@@ -855,6 +901,7 @@ h3 {
         font-size: 0.95rem;
     }
 
+    /* Ajustes para mensagem de resultado de simulação */
     .simulation-outcome-message {
         padding: 30px;
     }
@@ -868,6 +915,7 @@ h3 {
         gap: 15px;
     }
 
+    /* Ajustes para caixas de mensagem genéricas */
     .message-box {
         padding: 18px;
         font-size: 0.95rem;
@@ -877,9 +925,61 @@ h3 {
         font-size: 1.3rem;
     }
 
+    /* Ajustes para a barra inferior fixa */
     .fixed-bottom-bar {
-        flex-direction: column;
+        flex-direction: column; /* Botões empilhados em telas pequenas */
         gap: 12px;
         padding: 20px 18px;
+    }
+}
+
+/* Media Query para telas menores que 320px (iPhone SE, etc.) para garantir legibilidade mínima */
+@media (max-width: 320px) {
+    .splash-logo {
+        font-size: 2.8rem;
+    }
+    .splash-spinner {
+        width: 60px;
+        height: 60px;
+    }
+    .splash-message {
+        font-size: 1rem;
+    }
+    
+    .welcome-container {
+        padding: 20px 15px;
+    }
+    .logo-text {
+        font-size: 2rem;
+    }
+    .slogan {
+        font-size: 0.95rem;
+    }
+    .security-badge {
+        font-size: 0.85rem;
+        padding: 6px 12px;
+    }
+    .feature-item p {
+        font-size: 0.9rem;
+    }
+    .main-button {
+        font-size: 1rem;
+        padding: 13px 20px;
+    }
+    .header h2 {
+        font-size: 1.2rem;
+    }
+    .form-group input {
+        font-size: 0.95rem;
+        padding: 10px 15px;
+    }
+    .instruction-block .text-content h4 {
+        font-size: 1rem;
+    }
+    .instruction-block .text-content p {
+        font-size: 0.9rem;
+    }
+    .fixed-bottom-bar {
+        padding: 15px 15px;
     }
 }
